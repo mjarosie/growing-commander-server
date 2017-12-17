@@ -1,0 +1,10 @@
+{% extends "base.html" %}
+{% block content_title %}List of users{% endblock %}
+{% block content %}
+    {% for obs_id, measurements in tables %}
+        <h4>Observation #{{ obs_id }}</h4>
+        <div>
+        {{ measurements }}
+        </div>
+    {% endfor %}
+{% endblock %}
