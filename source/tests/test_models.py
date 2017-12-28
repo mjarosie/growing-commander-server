@@ -45,8 +45,9 @@ class TestUserModel(BaseTestCase):
         db.session.add(user)
         db.session.commit()
         auth_token = user.encode_auth_token(user.id)
-        self.assertTrue(isinstance(auth_token, bytes))
-        self.assertTrue(User.decode_auth_token(auth_token) == 1)
+
+        decoded_token_value = User.decode_auth_token(auth_token)
+        self.assertTrue(decoded_token_value == user.id)
 
 
 class TestMeasurementModel(BaseTestCase):
@@ -54,7 +55,6 @@ class TestMeasurementModel(BaseTestCase):
         measurement = Measurement("temperature", 25.0, "C", 10)
         db.session.add(measurement)
         db.session.commit()
-        print('xDDD')
         # db.session.commit()
         #
         # self.assertRaises(IntegrityError, )
@@ -67,7 +67,8 @@ class TestMeasurementModel(BaseTestCase):
         measurement = Measurement("temperature", 25.0, "C", obs_group.id)
         db.session.add(measurement)
         db.session.commit()
-        self.assertEqual(measurement.query.count(), 1)
+
+        self.assertEqual(Measurement.query.count(), 1)
 
 
 if __name__ == '__main__':
