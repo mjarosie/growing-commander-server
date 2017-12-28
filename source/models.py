@@ -89,40 +89,23 @@ class User(db.Model):
             return user
         return None
 
-
-class ObservationGroup(db.Model):
-    """ Model for storing observations consisting of multiple measurements (e.g. temperature, humidity, etc. """
-
-    __tablename__ = "observation_group"
-
-    id = db.Column(db.Integer, primary_key=True, autoincrement=True)
-    observation_start = db.Column(db.DateTime, nullable=False)
-    observation_end = db.Column(db.DateTime, nullable=False)
-    measurements = db.relationship('Measurement', backref='observation_group', lazy=False)
-
-    def __init__(self, observation_start, observation_end):
-        self.observation_start = observation_start
-        self.observation_end = observation_end
-
-    def __repr__(self):
-        return '<ObservationGroup from {} to {}>'.format(self.observation_start, self.observation_end)
-
-
 class Measurement(db.Model):
     """ Model for storing average values of measurements for a given observation group."""
     __tablename__ = "measurement"
 
     id = db.Column(db.Integer, primary_key=True, autoincrement=True)
+    timestamp = db.Column(db.Datetime, nullable=False)
+    device_name = db.Column(db.String, nullable=False)
     type = db.Column(db.String, nullable=False)
     value = db.Column(db.Float, nullable=False)
     unit = db.Column(db.String, nullable=False)
-    observation_group_id = db.Column(db.Integer, db.ForeignKey('observation_group.id'), nullable=False)
 
-    def __init__(self, type, value, unit, observation_group_id):
+    def __init__(self, timestamp, device_name, type, value, unit):
+        self.timestamp = timestamp
+        self.device_name = device_name
         self.type = type
         self.value = value
         self.unit = unit
-        self.observation_group_id = observation_group_id
 
     def __repr__(self):
-        return '<Measurement {}: {}{}>'.format(self.type, self.value, self.unit)
+        return '<Measurement of {} taken at {} from {}: {}{}>'.format(self.type, self.timestamp, self.device_name, self.value, self.unit)
