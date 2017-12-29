@@ -1,7 +1,7 @@
 from flask import render_template, request, url_for, flash, redirect
 from flask_login import login_user, logout_user, login_required
 from source import app
-from source.models import User, ObservationGroup, Measurement
+from source.models import User, Measurement
 from source.forms import LoginForm
 from source.tables import UserTable, ObservationGroupTable
 

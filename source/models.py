@@ -89,6 +89,7 @@ class User(db.Model):
             return user
         return None
 
+
 class Measurement(db.Model):
     """ Model for storing average values of measurements for a given observation group."""
     __tablename__ = "measurement"
