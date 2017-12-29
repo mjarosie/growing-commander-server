@@ -2,7 +2,7 @@ import unittest
 from datetime import datetime
 
 from source import db
-from source.models import User, Measurement, ObservationGroup
+from source.models import User, Measurement
 from source.tests.base import BaseTestCase
 from sqlalchemy.exc import IntegrityError
 
@@ -51,24 +51,26 @@ class TestUserModel(BaseTestCase):
 
 
 class TestMeasurementModel(BaseTestCase):
-    def test_adding_new_measurement_no_observation_group(self):
-        measurement = Measurement("temperature", 25.0, "C", 10)
-        db.session.add(measurement)
-        db.session.commit()
-        # db.session.commit()
-        #
-        # self.assertRaises(IntegrityError, )
-
-    def test_adding_new_measurement_existing_observation_group(self):
-        obs_group = ObservationGroup(datetime(2017, 5, 5), datetime(2017, 5, 6))
-        db.session.add(obs_group)
-        db.session.commit()
-
-        measurement = Measurement("temperature", 25.0, "C", obs_group.id)
+    def test_adding_new_measurement(self):
+        measurement = Measurement(datetime.now(), "Device 1", "temperature", 25.0, "C")
         db.session.add(measurement)
         db.session.commit()
 
         self.assertEqual(Measurement.query.count(), 1)
+
+    def test_adding_new_measurement(self):
+        measurement_1 = Measurement(datetime.now(), "Device 1", "temperature", 25.0, "C")
+        measurement_2 = Measurement(datetime.now(), "Device 1", "humidity", 30.0, "%")
+
+        measurement_3 = Measurement(datetime.now(), "Device 2", "temperature", 27.0, "C")
+        measurement_4 = Measurement(datetime.now(), "Device 2", "humidity", 33.0, "%")
+        measurements = [measurement_1, measurement_2, measurement_3, measurement_4]
+
+        for measurement in measurements:
+            db.session.add(measurement)
+
+        db.session.commit()
+        self.assertEqual(Measurement.query.count(), 4)
 
 
 if __name__ == '__main__':

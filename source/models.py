@@ -94,7 +94,7 @@ class Measurement(db.Model):
     __tablename__ = "measurement"
 
     id = db.Column(db.Integer, primary_key=True, autoincrement=True)
-    timestamp = db.Column(db.Datetime, nullable=False)
+    timestamp = db.Column(db.DateTime, nullable=False)
     device_name = db.Column(db.String, nullable=False)
     type = db.Column(db.String, nullable=False)
     value = db.Column(db.Float, nullable=False)
