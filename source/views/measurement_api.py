@@ -1,6 +1,7 @@
 import pandas as pd
 import json
 from datetime import datetime
+import jsonpickle
 
 from flask import Blueprint, request, make_response, jsonify
 from flask.views import MethodView
@@ -29,6 +30,13 @@ class MeasurementAPI(MethodView):
 
         # get the post data
         post_data_json = request.get_json().get('data')
+        if post_data_json == '' or post_data_json is None:
+            response_object = {
+                'status': 'fail',
+                'message': 'No data provided to POST'
+            }
+            return make_response(jsonify(response_object)), 401
+
         post_data = json.loads(post_data_json)
 
         # Create a dataframe from json data.
@@ -38,7 +46,8 @@ class MeasurementAPI(MethodView):
         # Add each row to database.
 
         for i, row in df.iterrows():
-            m = Measurement(row['timestamp'], row['device_name'], row['measurement_type'], row['measurement_value'], row['measurement_unit'])
+            m = Measurement(row['timestamp'], row['device_name'], row['measurement_type'], row['measurement_value'],
+                            row['measurement_unit'])
             db.session.add(m)
         db.session.commit()
 
@@ -50,8 +59,43 @@ class MeasurementAPI(MethodView):
         }
         return make_response(jsonify(response_object)), 200
 
+    def get(self, measurement_id):
+        auth_token = request.get_json().get('auth_token')
+        try:
+            auth_response = User.decode_auth_token(auth_token)
+        except ValueError as e:
+            response_object = {
+                'status': 'fail',
+                'message': str(e)
+            }
+            return make_response(jsonify(response_object)), 401
 
-measurement_view = MeasurementAPI.as_view('login_api')
+        if measurement_id is None:
+            # return a list of measurements
+            measurements = Measurement.query.all()
+            response_object = {
+                'status': 'success',
+                'data': measurements
+            }
+            return make_response(jsonpickle.encode(response_object)), 200
+
+        else:
+            # expose a single measurement
+            measurement = Measurement.query.filter_by(id=measurement_id)().first()
+            response_object = {
+                'status': 'success',
+                'data': measurement
+            }
+            return make_response(jsonify(response_object)), 200
+
+measurement_view = MeasurementAPI.as_view('measurement_api')
+
+measurement_api_blueprint.add_url_rule(
+    '/measurement',
+    defaults={'measurement_id': None},
+    view_func=measurement_view,
+    methods=['GET']
+)
 
 measurement_api_blueprint.add_url_rule(
     '/measurement',
