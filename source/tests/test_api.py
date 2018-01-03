@@ -1,12 +1,14 @@
 import json
+import jsonpickle
 import unittest
+from datetime import datetime
 
 from source import db
 from source.models import User, Measurement
 from tests.base import BaseTestCase
 
 
-class TestApiModel(BaseTestCase):
+class TestMeasurementApiModel(BaseTestCase):
     def test_add_new_measurement_rest_api(self):
         jsonified_dataframe = '{"0":{"device_name":"Thermometer 1","measurement_type":"humidity","measurement_unit":"%","measurement_value":37.4500007629,"timestamp":"2018-01-03T18:21:53.008Z"},"1":{"device_name":"Thermometer 1","measurement_type":"temperature","measurement_unit":"*C","measurement_value":24.7000007629,"timestamp":"2018-01-03T18:21:53.008Z"}}'
         with self.client:
@@ -41,6 +43,45 @@ class TestApiModel(BaseTestCase):
             self.assertIsInstance(data['message'], str)
             self.assertEqual(data['message'], "Invalid token. Please log in again.")
             self.assertEqual(Measurement.query.count(), 0)
+
+    def test_post_no_data(self):
+        with self.client:
+            auth_token = register_test_user_and_login(self)
+            response = self.client.post(
+                '/measurement',
+                data=json.dumps(dict(
+                    auth_token=auth_token
+                )),
+                content_type='application/json'
+            )
+            data = json.loads(response.data.decode())
+            self.assertEqual(response.status_code, 401)
+            self.assertEqual(data['status'], 'fail')
+            self.assertEqual(data['message'], "No data provided to POST")
+            self.assertEqual(Measurement.query.count(), 0)
+
+    def test_get_measurements(self):
+
+        # Add mock entries to database.
+        m1 = Measurement(datetime.now(), "Device 1", 'Type 1', 15, '*C')
+        m2 = Measurement(datetime.now(), "Device 1", 'Type 2', 256, 'MB')
+        db.session.add(m1)
+        db.session.add(m2)
+        db.session.commit()
+
+        with self.client:
+            auth_token = register_test_user_and_login(self)
+            response = self.client.get(
+                '/measurement',
+                data=json.dumps(dict(
+                    auth_token=auth_token
+                )),
+                content_type='application/json'
+            )
+            data = jsonpickle.decode(response.data.decode())
+            self.assertEqual(response.status_code, 200)
+            self.assertEqual(data['status'], 'success')
+            self.assertEqual(len(data['data']), 2)
 
 
 def register_test_user_and_login(app):
