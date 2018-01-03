@@ -1,5 +1,5 @@
 from source import app, db
-import source.views
+import source.views.app
 
 if __name__ == "__main__":
     if 'CERT_PATH' in app.config and 'KEY_PATH' in app.config:

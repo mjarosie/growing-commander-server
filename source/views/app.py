@@ -43,10 +43,8 @@ def users():
 @login_required
 def measures():
     tables = []
-    all_observations = ObservationGroup.query.order_by(ObservationGroup.observation_end.desc()).all()
-    for obs in all_observations:
-        observation_measurements = Measurement.query.filter(Measurement.observation_group_id == obs.id).all()
-        tables.append([obs.id, ObservationGroupTable(observation_measurements, border=True)])
+    measurements = Measurement.query.all()
+    tables.append(ObservationGroupTable(measurements, border=True))
     return render_template('measures.html', tables=tables)
 
 @app.route('/commands')

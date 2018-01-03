@@ -17,11 +17,12 @@ manager = Manager(app)
 login_manager = LoginManager(app)
 login_manager.login_view = "login"
 
-from source.auth.views import auth_blueprint
+from source.views.auth import auth_blueprint
+
 app.register_blueprint(auth_blueprint)
 
-
 manager.add_command('db', MigrateCommand)
+
 
 @app.before_request
 def _before_request():
