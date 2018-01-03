@@ -3,8 +3,8 @@ from datetime import datetime
 
 from source import db
 from source.models import User, Measurement
-from source.tests.base import BaseTestCase
-from sqlalchemy.exc import IntegrityError
+from tests.base import BaseTestCase
+
 
 class TestUserModel(BaseTestCase):
     def test_login_correct_password(self):
@@ -58,7 +58,7 @@ class TestMeasurementModel(BaseTestCase):
 
         self.assertEqual(Measurement.query.count(), 1)
 
-    def test_adding_new_measurement(self):
+    def test_adding_multiple_new_measurements(self):
         measurement_1 = Measurement(datetime.now(), "Device 1", "temperature", 25.0, "C")
         measurement_2 = Measurement(datetime.now(), "Device 1", "humidity", 30.0, "%")
 
