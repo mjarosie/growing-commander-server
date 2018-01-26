@@ -8,8 +8,8 @@ from flask.views import MethodView
 
 measurement_api_blueprint = Blueprint('measurement_api', __name__)
 
-from source import db
-from source.models import User, Measurement
+from .. import db
+from models import User, Measurement
 
 
 class MeasurementAPI(MethodView):
@@ -87,6 +87,7 @@ class MeasurementAPI(MethodView):
                 'data': measurement
             }
             return make_response(jsonify(response_object)), 200
+
 
 measurement_view = MeasurementAPI.as_view('measurement_api')
 

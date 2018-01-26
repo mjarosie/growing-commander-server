@@ -1,9 +1,11 @@
 from flask import render_template, request, url_for, flash, redirect
 from flask_login import login_user, logout_user, login_required
-from source import app
-from source.models import User, Measurement
-from source.forms import LoginForm
-from source.tables import UserTable, ObservationGroupTable
+from .. import app
+
+from models import User, Measurement
+from forms import LoginForm
+from tables import UserTable, ObservationGroupTable
+
 
 @app.route("/", methods=["GET", "POST"])
 def login():
@@ -39,6 +41,7 @@ def users():
     table = UserTable(all_users, border=True)
     return render_template('users.html', table=table)
 
+
 @app.route('/measures')
 @login_required
 def measures():
@@ -46,6 +49,7 @@ def measures():
     measurements = Measurement.query.all()
     tables.append(ObservationGroupTable(measurements, border=True))
     return render_template('measures.html', tables=tables)
+
 
 @app.route('/commands')
 @login_required

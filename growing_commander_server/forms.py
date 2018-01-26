@@ -1,6 +1,6 @@
 import wtforms
 from wtforms import validators
-from source.models import User
+from models import User
 
 
 class LoginForm(wtforms.Form):

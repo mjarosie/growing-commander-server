@@ -1,5 +1,6 @@
 from flask import render_template, request
 
+
 def object_list(template_name, query, paginate_by=20, **context):
     page = request.args.get('page')
     if page and page.isdigit():

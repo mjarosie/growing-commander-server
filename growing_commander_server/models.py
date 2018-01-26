@@ -1,8 +1,7 @@
 import datetime
 import jwt
 
-from source import app, db, bcrypt
-from source import login_manager
+from . import app, db, bcrypt, login_manager
 
 
 @login_manager.user_loader

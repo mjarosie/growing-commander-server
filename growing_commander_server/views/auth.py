@@ -3,7 +3,7 @@ from flask.views import MethodView
 
 auth_blueprint = Blueprint('auth', __name__)
 
-from source.models import User
+from models import User
 
 
 class LoginAPI(MethodView):

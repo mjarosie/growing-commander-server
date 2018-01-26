@@ -5,7 +5,10 @@ from flask_migrate import Migrate, MigrateCommand
 from flask_script import Manager
 from flask_login import LoginManager, current_user
 
-from source.configs import Configuration
+import sys
+print(sys.path)
+
+from growing_commander_server.configs import Configuration
 
 app = Flask(__name__)
 app.config.from_object(Configuration)
@@ -20,8 +23,10 @@ manager = Manager(app)
 login_manager = LoginManager(app)
 login_manager.login_view = "login"
 
-from source.views.auth import auth_blueprint
-from source.views.measurement_api import measurement_api_blueprint
+# Imported here due to the circular dependencies.
+# TODO: Figure out if there's a way to make it cleaner.
+from views.auth import auth_blueprint
+from views.measurement_api import measurement_api_blueprint
 
 app.register_blueprint(auth_blueprint)
 app.register_blueprint(measurement_api_blueprint)
