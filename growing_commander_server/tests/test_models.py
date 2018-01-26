@@ -2,8 +2,8 @@ import unittest
 from datetime import datetime
 
 from growing_commander_server import db
-from models import User, Measurement
-from tests.base import BaseTestCase
+from growing_commander_server.models import User, Measurement
+from growing_commander_server.tests.base import BaseTestCase
 
 
 class TestUserModel(BaseTestCase):

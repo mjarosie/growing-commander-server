@@ -1,8 +1,7 @@
 from flask import Flask, g
 from flask_sqlalchemy import SQLAlchemy
 from flask_bcrypt import Bcrypt
-from flask_migrate import Migrate, MigrateCommand
-from flask_script import Manager
+from flask_migrate import Migrate
 from flask_login import LoginManager, current_user
 
 from growing_commander_server.configs import Configuration
@@ -21,8 +20,8 @@ login_manager.login_view = "login"
 
 # Imported here due to the circular dependencies.
 # TODO: Figure out if there's a way to make it cleaner.
-from views.auth import auth_blueprint
-from views.measurement_api import measurement_api_blueprint
+from growing_commander_server.views.auth import auth_blueprint
+from growing_commander_server.views.measurement_api import measurement_api_blueprint
 
 app.register_blueprint(auth_blueprint)
 app.register_blueprint(measurement_api_blueprint)

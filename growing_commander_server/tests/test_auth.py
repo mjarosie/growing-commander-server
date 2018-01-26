@@ -1,8 +1,8 @@
 import unittest
 import json
 from growing_commander_server import db
-from models import User
-from tests.base import BaseTestCase
+from growing_commander_server.models import User
+from growing_commander_server.tests.base import BaseTestCase
 
 
 class TestAuthBlueprint(BaseTestCase):

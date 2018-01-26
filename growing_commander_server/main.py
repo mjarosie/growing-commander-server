@@ -1,5 +1,5 @@
 from growing_commander_server import app
-import views.app
+import growing_commander_server.views.app
 
 if __name__ == "__main__":
     if 'CERT_PATH' in app.config and 'KEY_PATH' in app.config:

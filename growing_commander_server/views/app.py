@@ -1,10 +1,10 @@
 from flask import render_template, request, url_for, flash, redirect
 from flask_login import login_user, logout_user, login_required
-from .. import app
+from growing_commander_server import app
 
-from models import User, Measurement
-from forms import LoginForm
-from tables import UserTable, ObservationGroupTable
+from growing_commander_server.models import User, Measurement
+from growing_commander_server.forms import LoginForm
+from growing_commander_server.tables import UserTable, ObservationGroupTable
 
 
 @app.route("/", methods=["GET", "POST"])
