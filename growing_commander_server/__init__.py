@@ -5,9 +5,6 @@ from flask_migrate import Migrate, MigrateCommand
 from flask_script import Manager
 from flask_login import LoginManager, current_user
 
-import sys
-print(sys.path)
-
 from growing_commander_server.configs import Configuration
 
 app = Flask(__name__)
@@ -19,7 +16,6 @@ app.config["JSONIFY_PRETTYPRINT_REGULAR"] = False
 bcrypt = Bcrypt(app)
 db = SQLAlchemy(app)
 migrate = Migrate(app, db)
-manager = Manager(app)
 login_manager = LoginManager(app)
 login_manager.login_view = "login"
 

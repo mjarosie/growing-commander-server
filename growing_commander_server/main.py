@@ -1,6 +1,3 @@
-import sys
-print(sys.path)
-
 from . import app
 import views.app
 
