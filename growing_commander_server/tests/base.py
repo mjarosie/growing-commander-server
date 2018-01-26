@@ -1,7 +1,7 @@
 from flask_testing import TestCase
-from source import app, db
+from growing_commander_server import app, db
 
-from source.configs import TestConfiguration
+from configs import TestConfiguration
 
 
 class BaseTestCase(TestCase):

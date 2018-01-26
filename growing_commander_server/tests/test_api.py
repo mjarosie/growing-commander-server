@@ -3,8 +3,8 @@ import jsonpickle
 import unittest
 from datetime import datetime
 
-from source import db
-from source.models import User, Measurement
+from growing_commander_server import db
+from models import User, Measurement
 from tests.base import BaseTestCase
 
 

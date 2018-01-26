@@ -8,7 +8,7 @@ from flask.views import MethodView
 
 measurement_api_blueprint = Blueprint('measurement_api', __name__)
 
-from .. import db
+from growing_commander_server import db
 from models import User, Measurement
 
 

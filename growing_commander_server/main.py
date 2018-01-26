@@ -1,4 +1,4 @@
-from . import app
+from growing_commander_server import app
 import views.app
 
 if __name__ == "__main__":

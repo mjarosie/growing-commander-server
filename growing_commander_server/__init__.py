@@ -27,8 +27,6 @@ from views.measurement_api import measurement_api_blueprint
 app.register_blueprint(auth_blueprint)
 app.register_blueprint(measurement_api_blueprint)
 
-manager.add_command('db', MigrateCommand)
-
 
 @app.before_request
 def _before_request():
