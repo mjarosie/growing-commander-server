@@ -1,9 +1,22 @@
 language: python
 python:
   - "3.6"
-# command to install dependencies
+addons:
+  ssh_known_hosts:
+  - 123.45.56.78
+branches:
+  only:
+  - master
+env:
+  global:
+  - REMOTE_APP_DIR=/var/www/MY_DOMAIN.COM/
+  - REMOTE_USER=deploy
+  - REMOTE_HOST=123.45.56.78
+  - PORT=8080
 install:
-  - pip install -r requirements.txt
-# command to run tests
+- pip install -r requirements.txt
 script:
-  - python -m unittest discover
+- python -m unittest discover
+before_install:
+- openssl aes-256-cbc -K $encrypted_8dc034ad8bd9_key -iv $encrypted_8dc034ad8bd9_iv
+  -in deploy_rsa_2018-02-02.enc -out deploy_rsa_2018-02-02 -d
