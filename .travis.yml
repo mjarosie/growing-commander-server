@@ -1,6 +1,6 @@
 language: python
 python:
-  - "3.6"
+- '3.6'
 addons:
   ssh_known_hosts:
   - 123.45.56.78
