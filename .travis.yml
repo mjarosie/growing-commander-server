@@ -29,6 +29,6 @@ before_deploy:
 deploy:
   provider: script
   skip_cleanup: true
-  script: rsync -r --delete-after --quiet  -e "ssh -p $REMOTE_SSH_PORT" --rsync-path="sudo rsync" $TRAVIS_BUILD_DIR/growing_commander_server $REMOTE_USER@$REMOTE_HOST:$REMOTE_APP_DIR
+  script: rsync -r --delete-after --quiet  -e "ssh -p $REMOTE_SSH_PORT" $TRAVIS_BUILD_DIR/growing_commander_server $REMOTE_USER@$REMOTE_HOST:$REMOTE_APP_DIR
   on:
     branch: master
