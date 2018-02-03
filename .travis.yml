@@ -28,7 +28,7 @@ before_deploy:
 # Adding unknown host to ~/.ssh/known_hosts file in case we're connecting for the first time.
 # See: https://medium.com/@wblankenship/bash-automatically-populating-a-known-hosts-file-15ea28d06c02
 # Slightly modified.
-- ! eval "ssh-keygen -F $REMOTE_HOST 2>/dev/null 1>/dev/null" && ssh-keyscan -t rsa -T 10 $REMOTE_HOST >> ~/.ssh/known_hosts; || true # Ignoring non-zero return value
+- ! eval "ssh-keygen -F $REMOTE_HOST 2>/dev/null 1>/dev/null && ssh-keyscan -t rsa -T 10 $REMOTE_HOST >> ~/.ssh/known_hosts; || true" # Ignoring non-zero return value
 
 deploy:
   provider: script
