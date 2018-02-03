@@ -26,7 +26,7 @@ before_deploy:
 - ssh-add /tmp/deploy_rsa_2018-02-02
 
 deploy:
-  provider: digital-ocean
+  provider: script
   skip_cleanup: true
   script: rsync -r --delete-after --quiet -e "ssh -p $REMOTE_SSH_PORT" $TRAVIS_BUILD_DIR/growing_commander_server $REMOTE_USER@$REMOTE_HOST:$REMOTE_APP_DIR
   on:
