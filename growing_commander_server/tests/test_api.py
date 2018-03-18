@@ -14,7 +14,7 @@ class TestMeasurementApiModel(BaseTestCase):
         with self.client:
             auth_token = register_test_user_and_login(self)
             response = self.client.post(
-                '/measurement',
+                '/api/v1/measurement',
                 data=json.dumps(dict(
                     auth_token=auth_token,
                     data=jsonified_dataframe
@@ -30,7 +30,7 @@ class TestMeasurementApiModel(BaseTestCase):
         jsonified_dataframe = '{"0":{"device_name":"Thermometer 1","measurement_type":"humidity","measurement_unit":"%","measurement_value":37.4500007629,"timestamp":"2018-01-03T18:21:53.008Z"},"1":{"device_name":"Thermometer 1","measurement_type":"temperature","measurement_unit":"*C","measurement_value":24.7000007629,"timestamp":"2018-01-03T18:21:53.008Z"}}'
         with self.client:
             response = self.client.post(
-                '/measurement',
+                '/api/v1/measurement',
                 data=json.dumps(dict(
                     auth_token='wrong_token_941i41941-2-44weaaseasease',
                     data=jsonified_dataframe
@@ -48,7 +48,7 @@ class TestMeasurementApiModel(BaseTestCase):
         with self.client:
             auth_token = register_test_user_and_login(self)
             response = self.client.post(
-                '/measurement',
+                '/api/v1/measurement',
                 data=json.dumps(dict(
                     auth_token=auth_token
                 )),
@@ -72,7 +72,7 @@ class TestMeasurementApiModel(BaseTestCase):
         with self.client:
             auth_token = register_test_user_and_login(self)
             response = self.client.get(
-                '/measurement',
+                '/api/v1/measurement',
                 data=json.dumps(dict(
                     auth_token=auth_token
                 )),
@@ -92,7 +92,7 @@ def register_test_user_and_login(app):
 
     # registered user login
     response = app.client.post(
-        '/auth/login',
+        'api/v1/auth/login',
         data=json.dumps(dict(
             name='Name',
             password='Password'

@@ -16,7 +16,7 @@ class TestAuthBlueprint(BaseTestCase):
 
             # registered user login
             response = self.client.post(
-                '/auth/login',
+                '/api/v1/auth/login',
                 data=json.dumps(dict(
                     name='Name',
                     password='Password'
