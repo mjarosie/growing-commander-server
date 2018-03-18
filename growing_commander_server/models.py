@@ -4,14 +4,11 @@ import jwt
 from growing_commander_server import app, db, bcrypt, login_manager
 
 
-@login_manager.user_loader
-def _user_loader(user_id):
-    return User.query.get(int(user_id))
-
-
 class User(db.Model):
-    """ User Model for storing user related details """
-    __tablename__ = "users"
+    """
+        Model for storing details about a measurement sources (devices which make measurements, authenticate and send
+        these measurements to the server.
+     """
 
     id = db.Column(db.Integer, primary_key=True, autoincrement=True)
     name = db.Column(db.String(255), nullable=False)
@@ -54,7 +51,7 @@ class User(db.Model):
         """
         try:
             payload = {
-                'exp': datetime.datetime.utcnow() + datetime.timedelta(days=0, seconds=5),
+                'exp': datetime.datetime.utcnow() + datetime.timedelta(days=0, minutes=5),
                 'iat': datetime.datetime.utcnow(),
                 'sub': user_id
             }
@@ -108,4 +105,8 @@ class Measurement(db.Model):
         self.unit = unit
 
     def __repr__(self):
-        return '<Measurement of {} taken at {} from {}: {}{}>'.format(self.type, self.timestamp, self.device_name, self.value, self.unit)
+        return '<Measurement of {} taken at {} from {}: {}{}>'.format(self.type, self.timestamp, self.device_name,
+                                                                      self.value, self.unit)
+
+
+
