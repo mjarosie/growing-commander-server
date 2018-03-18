@@ -1,15 +1,13 @@
 import pandas as pd
 import json
-from datetime import datetime
 import jsonpickle
 
 from flask import Blueprint, request, make_response, jsonify
 from flask.views import MethodView
-
-measurement_api_blueprint = Blueprint('measurement_api', __name__)
-
 from growing_commander_server import db
 from growing_commander_server.models import User, Measurement
+
+measurement_api_blueprint = Blueprint('measurement_api', __name__)
 
 
 class MeasurementAPI(MethodView):
