@@ -14,7 +14,7 @@
                     <h1>
                         Log in
                     </h1>
-                    <form action="{{ url_for('login')}}" class="form form-horizontal" method="post">
+                    <form action="{{ url_for('app_blueprint.login')}}" class="form form-horizontal" method="post">
                         {% from "macros/form_field.html" import form_field %}
                         {{ form_field(form.name) }}
                         {{ form_field(form.password) }}
