@@ -1,6 +1,6 @@
 import wtforms
 from wtforms import validators
-from models import User
+from growing_commander_server.models import User
 
 
 class LoginForm(wtforms.Form):
