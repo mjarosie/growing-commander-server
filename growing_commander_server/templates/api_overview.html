@@ -1,0 +1,22 @@
+{% extends "base.html" %}
+{% block content_title %}API overview{% endblock %}
+{% block content %}
+    <div>
+    <h1>Auth API</h1>
+        <div>
+            '/auth/login' </br>
+            POST: 'name', 'password'
+        </div>
+    </div>
+    <div>
+    <h1>Measurement API</h1>
+        <div>
+            /measurement/ </br>
+            POST: 'auth_token', 'data'
+        </div>
+        <div>
+            /measurement/&lt;measurement_id&gt; </br>
+            GET: 'auth_token',
+        </div>
+    </div>
+{% endblock %}
